@@ -1,25 +1,13 @@
 import React from 'react';
+import { Provider } from 'mobx-react';
 import '../styles/index.less';
-import Node from './Node';
-
-const data = {
-  name: 'Testing',
-  children: [
-    {
-      name: 'Testing 1',
-      children: [],
-    },
-    {
-      name: 'Testing 2',
-      children: [],
-    },
-  ]
-}
+import * as stores from '../stores';
+import Canvas from './Canvas';
 
 const App = () => (
-  <div className="canvas">
-    <Node data={data} />
-  </div>
+  <Provider {...stores}>
+    <Canvas />
+  </Provider>
 );
 
 export default App;
