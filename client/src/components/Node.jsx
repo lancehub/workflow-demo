@@ -1,11 +1,15 @@
 import React from 'react';
 import '../styles/node.less';
 
-const Node = ({data}) => (
+const Node = ({ tree }) => (
   <div className="node">
-    <div className="name">{data.name}</div>
+    {console.log(tree)}
+    <div className="name">{tree.name}</div>
     <div className="children">
-      {data.children.map((item) => <Node data={item} />)}
+      {tree.children && tree.children.length
+        ? tree.children.map((item) => <Node key={item.id} tree={item} />)
+        : null
+      }
     </div>
   </div>
 );

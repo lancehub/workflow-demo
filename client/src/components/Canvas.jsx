@@ -9,7 +9,7 @@ class Canvas extends React.PureComponent {
     const { workflow } = this.props;
     return (
       <div className="canvas">
-        <Node data={workflow.data} />
+        <Node tree={workflow.tree} />
       </div>
     );
   }
