@@ -19,12 +19,12 @@ class Node extends React.PureComponent {
     const { tree } = this.props;
     return (
       <div className="node">
-        <div className="name">
+        <div className="main">
           <a className="control" href="#">
             {tree.children ? <span className="symbol" onClick={this.switchCollapse}>{collapse ? '+' : '-'}</span> : null}
             <span className={collapse ? 'dot collapse' : 'dot'} />
           </a>
-          {tree.name}
+          <div className="name">{tree.name}</div>
         </div>
         {collapse
           ? null

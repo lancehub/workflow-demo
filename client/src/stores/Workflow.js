@@ -53,7 +53,7 @@ class Workflow {
       key_child: 'children',
     });
     return {
-      name: 'root',
+      name: 'Root',
       children: ltt.GetTree(),
     };
   }

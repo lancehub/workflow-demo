@@ -1,6 +1,12 @@
 .node {
-  .name {
+  .main {
+    display: flex;
     a {
+      display: inline-block;
+      margin-right: 5px;
+      flex: 0;
+      flex-basis: 20px;
+      text-align: right;
       text-decoration: none;
 
       .symbol {
@@ -18,6 +24,7 @@
         width: 6px;
         height: 6px;
         background-color: green;
+        margin-left: 5px;
 
         &.collapse {
           background-color: blue;
@@ -28,9 +35,12 @@
         }
       }
     }
+    .name{
+      flex: 1;
+    }
   }
 
   .children {
-    margin-left: 20px;
+    margin-left: 30px;
   }
 }
