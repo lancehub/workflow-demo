@@ -1,5 +1,36 @@
-.node{
-  .children{
+.node {
+  .name {
+    a {
+      text-decoration: none;
+
+      .symbol {
+        opacity: 0;
+      }
+
+      &:hover .symbol {
+        opacity: 1;
+      }
+
+      .dot {
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 50%;
+        width: 6px;
+        height: 6px;
+        background-color: green;
+
+        &.collapse {
+          background-color: blue;
+        }
+
+        &:hover {
+          background-color: red;
+        }
+      }
+    }
+  }
+
+  .children {
     margin-left: 20px;
   }
 }

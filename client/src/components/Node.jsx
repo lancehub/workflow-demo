@@ -1,17 +1,40 @@
 import React from 'react';
+import ReactPropTypes from 'prop-types';
 import '../styles/node.less';
 
-const Node = ({ tree }) => (
-  <div className="node">
-    {console.log(tree)}
-    <div className="name">{tree.name}</div>
-    <div className="children">
-      {tree.children && tree.children.length
-        ? tree.children.map((item) => <Node key={item.id} tree={item} />)
-        : null
-      }
-    </div>
-  </div>
-);
+class Node extends React.PureComponent {
+  static propTypes = {
+    tree: ReactPropTypes.object.isRequired,
+  }
+  state = {
+    collapse: false,
+  }
+  switchCollapse = () => {
+    this.setState({
+      collapse: !this.state.collapse,
+    });
+  }
+  render() {
+    const { collapse } = this.state;
+    const { tree } = this.props;
+    return (
+      <div className="node">
+        <div className="name">
+          <a className="control" href="#">
+            {tree.children ? <span className="symbol" onClick={this.switchCollapse}>{collapse ? '+' : '-'}</span> : null}
+            <span className={collapse ? 'dot collapse' : 'dot'} />
+          </a>
+          {tree.name}
+        </div>
+        {collapse
+          ? null
+          : <div className="children">
+            {tree.children && tree.children.map(item => <Node key={item.id} tree={item} />)}
+          </div>
+        }
+      </div>
+    );
+  }
+}
 
 export default Node;
