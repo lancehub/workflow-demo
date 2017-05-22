@@ -37,19 +37,21 @@ class Node extends React.PureComponent {
     const code = evt.keyCode || evt.which;
     if (code === 8) { // this is backspace
       if (tree.name === '') {
+        evt.preventDefault();
         tree.delete();
       }
     }
     if (code === 9) { // this is tab
+      evt.preventDefault();
       if (evt.shiftKey) { // shift + tab
         const parent = tree.parent;
-        parent.parent.appendChildAt(tree, parent.index);
+        parent.parent.appendChildAt({ ...tree, focus: true }, parent.index);
         tree.delete();
       } else {
         const index = tree.index;
         if (index !== 0) {
           const prev = tree.prev;
-          prev.appendChild(tree);
+          prev.appendChild({ ...tree, focus: true });
           tree.delete();
         }
       }
