@@ -27,7 +27,14 @@ class Node extends React.PureComponent {
         id: Math.random(),
         name: '',
         children: [],
+        focus: true,
       });
+    }
+  }
+  componentDidMount = () => {
+    console.log("I am new", this.props.tree.id, this.props.tree.focus)
+    if(this.props.tree.focus){
+      this.input.htmlEl.focus();
     }
   }
   render() {
@@ -43,6 +50,7 @@ class Node extends React.PureComponent {
           </a>
           <div className="name">
             <ContentEditable
+              ref={(me)=>this.input = me}
               html={tree.name}
               disabled={false}
               onChange={this.editContent}

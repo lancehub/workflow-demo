@@ -7,6 +7,7 @@ class Tree {
       name: data.name,
       children: data.children.map(item => new Tree(item)),
     });
+    this.focus = !!data.focus;
   }
 
   @action.bound addChild(item) {
