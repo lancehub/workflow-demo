@@ -37,6 +37,11 @@ class Tree {
   @action.bound lossFocus(){
     this.focus = false;
   }
+
+  @action.bound delete(){
+    //this.parent.children.remove(this);
+    this.parent.children.splice(tree.myIndex(), 1);
+  }
 }
 
 export default Tree;

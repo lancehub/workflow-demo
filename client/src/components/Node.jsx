@@ -47,6 +47,15 @@ class Node extends React.PureComponent {
       }
     }
   }
+  handleKeyDown = (evt) => {
+    const { tree } = this.props;
+    const code = evt.keyCode || evt.which;
+    if(code == 8){
+      if(tree.name == ''){
+        tree.delete();
+      }
+    }
+  }
   componentDidMount = () => {
     if(this.props.tree.focus){
       this.input.htmlEl.focus();
@@ -72,6 +81,7 @@ class Node extends React.PureComponent {
               disabled={false}
               onChange={this.editContent}
               onKeyPress={this.handleKeyPress}
+              onKeyDown={this.handleKeyDown}
             />
           </div>
         </div>
