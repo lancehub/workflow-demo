@@ -12,6 +12,10 @@ class Tree {
   @action.bound addChild(item) {
     this.children.push(new Tree(item));
   }
+
+  @action.bound edit(content) {
+    this.name = content;
+  }
 }
 
 export default Tree;
