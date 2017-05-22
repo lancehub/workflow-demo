@@ -6,22 +6,28 @@ import '../styles/node.less';
 @observer
 class Node extends React.PureComponent {
 
+  componentDidMount = () => {
+    if (this.props.tree.focus) {
+      this.input.htmlEl.focus();
+      this.props.tree.focus = false;
+    }
+  }
   handleChange = (evt) => {
     this.props.tree.edit(evt.target.value);
   }
   handleKeyPress = (evt) => {
     const { tree } = this.props;
     const code = evt.keyCode || evt.which;
-    if(code == 13) { //this is enter
+    if (code === 13) { // this is enter
       evt.preventDefault();
       const newTree = {
         id: Math.random(),
         name: '',
         focus: true,
       };
-      if(tree.parent && tree.children.length == 0) {
+      if (tree.parent && tree.children.length === 0) {
         tree.parent.appendChildAt(newTree, tree.index);
-      }else{
+      } else {
         tree.prependChild(newTree);
       }
     }
@@ -29,30 +35,24 @@ class Node extends React.PureComponent {
   handleKeyDown = (evt) => {
     const { tree } = this.props;
     const code = evt.keyCode || evt.which;
-    if(code == 8){ //this is backspace
-      if(tree.name == ''){
+    if (code === 8) { // this is backspace
+      if (tree.name === '') {
         tree.delete();
       }
     }
-    if(code == 9){ //this is tab
-      if(evt.shiftKey){ //shift + tab
+    if (code === 9) { // this is tab
+      if (evt.shiftKey) { // shift + tab
         const parent = tree.parent;
         parent.parent.appendChildAt(tree, parent.index);
         tree.delete();
-      }else{
+      } else {
         const index = tree.index;
-        if(index != 0){
+        if (index !== 0) {
           const prev = tree.prev;
           prev.appendChild(tree);
           tree.delete();
         }
       }
-    }
-  }
-  componentDidMount = () => {
-    if(this.props.tree.focus){
-      this.input.htmlEl.focus();
-      this.props.tree.focus = false;
     }
   }
   render() {
@@ -66,7 +66,7 @@ class Node extends React.PureComponent {
           </a>
           <div className="name">
             <ContentEditable
-              ref={(me)=>this.input = me}
+              ref={me => this.input = me}
               html={tree.name}
               disabled={false}
               onChange={this.handleChange}
