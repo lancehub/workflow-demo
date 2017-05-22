@@ -23,30 +23,47 @@ class Node extends React.PureComponent {
     const code = evt.keyCode || evt.which;
     if(code == 13) {
       evt.preventDefault();
-      tree.addChild({
-        id: Math.random(),
-        name: '',
-        children: [],
-        focus: true,
-      });
+      if(tree.parent && tree.children.length == 0) {
+        /*tree.parent.appendChild({
+          id: Math.random(),
+          name: '',
+          children: [],
+          focus: true,
+        });*/
+        const index = tree.myIndex();
+        tree.parent.appendChildAt({
+          id: Math.random(),
+          name: '',
+          children: [],
+          focus: true,
+        }, index);
+      }else{
+        tree.prependChild({
+          id: Math.random(),
+          name: '',
+          children: [],
+          focus: true,
+        });
+      }
     }
   }
   componentDidMount = () => {
-    console.log("I am new", this.props.tree.id, this.props.tree.focus)
     if(this.props.tree.focus){
       this.input.htmlEl.focus();
+      this.props.tree.lossFocus();
     }
   }
   render() {
     const { collapse } = this.state;
     const { tree } = this.props;
-    console.log(tree, tree.name);
+    console.log('render', tree);
+    window.tree = tree
     return (
       <div className="node">
         <div className="main">
           <a className="control" href="#">
             {tree.children ? <span className="symbol" onClick={this.switchCollapse}>{collapse ? '+' : '-'}</span> : null}
-            <span onClick={() => tree.addChild({ id: Math.random(), name: 'Something', children: [] })} className={collapse ? 'dot collapse' : 'dot'} />
+            <span onClick={() => tree.appendChild({ id: Math.random(), name: 'Something', children: [] })} className={collapse ? 'dot collapse' : 'dot'} />
           </a>
           <div className="name">
             <ContentEditable
