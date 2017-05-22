@@ -1,13 +1,9 @@
 import React from 'react';
-import ReactPropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import '../styles/node.less';
 
 @observer
 class Node extends React.PureComponent {
-  static propTypes = {
-    tree: ReactPropTypes.object.isRequired,
-  }
   state = {
     collapse: false,
   }
@@ -19,13 +15,13 @@ class Node extends React.PureComponent {
   render() {
     const { collapse } = this.state;
     const { tree } = this.props;
-    console.log(tree)
+    console.log(tree);
     return (
       <div className="node">
         <div className="main">
           <a className="control" href="#">
             {tree.children ? <span className="symbol" onClick={this.switchCollapse}>{collapse ? '+' : '-'}</span> : null}
-            <span onClick={()=>tree.addChild({id: Math.random(), name: 'Something', children:[]})} className={collapse ? 'dot collapse' : 'dot'} />
+            <span onClick={() => tree.addChild({ id: Math.random(), name: 'Something', children: [] })} className={collapse ? 'dot collapse' : 'dot'} />
           </a>
           <div className="name">{tree.name}</div>
         </div>
