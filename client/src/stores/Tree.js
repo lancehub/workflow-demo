@@ -3,13 +3,15 @@ import { action, computed, extendObservable } from 'mobx';
 class Tree {
   constructor(data) {
     this.id = data.id;
+    
     extendObservable(this, {
       collapsed: data.collapsed || false,
-      name: data.name,
-      children: data.children.map(item => new Tree(item)),
-      focus: data.focus || false,
+      name: data.name || '',
+      children: (data.children || []).map(item => new Tree(item)),
       parent: data.parent,
     });
+
+    this.focus = data.focus || false;
   }
 
   @action.bound toggleCollapse() {
@@ -32,10 +34,6 @@ class Tree {
     this.name = content;
   }
 
-  @action.bound loseFocus() {
-    this.focus = false;
-  }
-
   @action.bound delete() {
     this.parent.children.splice(this.index, 1);
   }
@@ -45,6 +43,14 @@ class Tree {
       return this.parent.children.indexOf(this);
     }
     return 0;
+  }
+
+  @computed get prev() {
+    const index = this.index;
+    if(index != 0){
+      return this.parent.children[index - 1];
+    }
+    return this.parent;
   }
 }
 

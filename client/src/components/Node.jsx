@@ -12,39 +12,47 @@ class Node extends React.PureComponent {
   handleKeyPress = (evt) => {
     const { tree } = this.props;
     const code = evt.keyCode || evt.which;
-    if(code == 13) {
+    if(code == 13) { //this is enter
       evt.preventDefault();
+      const newTree = {
+        id: Math.random(),
+        name: '',
+        focus: true,
+      };
       if(tree.parent && tree.children.length == 0) {
-        const index = tree.index;
-        tree.parent.appendChildAt({
-          id: Math.random(),
-          name: '',
-          children: [],
-          focus: true,
-        }, index);
+        tree.parent.appendChildAt(newTree, tree.index);
       }else{
-        tree.prependChild({
-          id: Math.random(),
-          name: '',
-          children: [],
-          focus: true,
-        });
+        tree.prependChild(newTree);
       }
     }
   }
   handleKeyDown = (evt) => {
     const { tree } = this.props;
     const code = evt.keyCode || evt.which;
-    if(code == 8){
+    if(code == 8){ //this is backspace
       if(tree.name == ''){
         tree.delete();
+      }
+    }
+    if(code == 9){ //this is tab
+      if(evt.shiftKey){ //shift + tab
+        const parent = tree.parent;
+        parent.parent.appendChildAt(tree, parent.index);
+        tree.delete();
+      }else{
+        const index = tree.index;
+        if(index != 0){
+          const prev = tree.prev;
+          prev.appendChild(tree);
+          tree.delete();
+        }
       }
     }
   }
   componentDidMount = () => {
     if(this.props.tree.focus){
       this.input.htmlEl.focus();
-      this.props.tree.loseFocus();
+      this.props.tree.focus = false;
     }
   }
   render() {
@@ -53,7 +61,7 @@ class Node extends React.PureComponent {
       <div className="node">
         <div className="main">
           <a className="control" href="#">
-            {tree.children ? <span className="symbol" onClick={tree.toggleCollapse}>{tree.collapsed ? '+' : '-'}</span> : null}
+            {tree.children.length ? <span className="symbol" onClick={tree.toggleCollapse}>{tree.collapsed ? '+' : '-'}</span> : null}
             <span onClick={() => tree.appendChild({ id: Math.random(), name: 'Something', children: [] })} className={tree.collapsed ? 'dot collapse' : 'dot'} />
           </a>
           <div className="name">
