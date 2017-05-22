@@ -45,8 +45,10 @@ class Node extends React.PureComponent {
       evt.preventDefault();
       if (evt.shiftKey) { // shift + tab
         const parent = tree.parent;
-        parent.parent.appendChildAt({ ...tree, focus: true }, parent.index);
-        tree.delete();
+        if(parent.parent){
+          parent.parent.appendChildAt({ ...tree, focus: true }, parent.index);
+          tree.delete();
+        }
       } else {
         const index = tree.index;
         if (index !== 0) {
