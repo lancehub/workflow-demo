@@ -4,9 +4,10 @@ class Tree {
   constructor(data) {
     this.id = data.id;
     extendObservable(this, {
+      collapsed: data.collapsed || false,
       name: data.name,
       children: data.children.map(item => new Tree(item)),
-      focus: !!data.focus,
+      focus: data.focus || false,
       parent: data.parent,
     });
 
@@ -16,6 +17,10 @@ class Tree {
       }
       return 0;
     }
+  }
+
+  @action.bound toggleCollapse() {
+    this.collapsed = !this.collapsed;
   }
 
   @action.bound prependChild(item) {
@@ -34,7 +39,7 @@ class Tree {
     this.name = content;
   }
 
-  @action.bound lossFocus(){
+  @action.bound loseFocus(){
     this.focus = false;
   }
 
