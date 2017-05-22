@@ -5,8 +5,8 @@ import '../styles/node.less';
 
 @observer
 class Node extends React.PureComponent {
-  
-  handleEditContent = (evt) => {
+
+  handleChange = (evt) => {
     this.props.tree.edit(evt.target.value);
   }
   handleKeyPress = (evt) => {
@@ -15,7 +15,7 @@ class Node extends React.PureComponent {
     if(code == 13) {
       evt.preventDefault();
       if(tree.parent && tree.children.length == 0) {
-        const index = tree.myIndex();
+        const index = tree.index;
         tree.parent.appendChildAt({
           id: Math.random(),
           name: '',
@@ -61,7 +61,7 @@ class Node extends React.PureComponent {
               ref={(me)=>this.input = me}
               html={tree.name}
               disabled={false}
-              onChange={this.editContent}
+              onChange={this.handleChange}
               onKeyPress={this.handleKeyPress}
               onKeyDown={this.handleKeyDown}
             />

@@ -1,4 +1,4 @@
-import { action, extendObservable } from 'mobx';
+import { action, computed, extendObservable } from 'mobx';
 
 class Tree {
   constructor(data) {
@@ -10,13 +10,6 @@ class Tree {
       focus: data.focus || false,
       parent: data.parent,
     });
-
-    this.myIndex = () => {
-      if(this.parent){
-        return this.parent.children.indexOf(this);
-      }
-      return 0;
-    }
   }
 
   @action.bound toggleCollapse() {
@@ -39,13 +32,19 @@ class Tree {
     this.name = content;
   }
 
-  @action.bound loseFocus(){
+  @action.bound loseFocus() {
     this.focus = false;
   }
 
-  @action.bound delete(){
-    //this.parent.children.remove(this);
-    this.parent.children.splice(tree.myIndex(), 1);
+  @action.bound delete() {
+    this.parent.children.splice(this.index, 1);
+  }
+
+  @computed get index() {
+    if(this.parent){
+      return this.parent.children.indexOf(this);
+    }
+    return 0;
   }
 }
 
