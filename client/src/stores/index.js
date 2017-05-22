@@ -2,7 +2,7 @@ import { useStrict } from 'mobx';
 import { enableLogging } from 'mobx-logger';
 import { create } from 'mobx-persist';
 import localForage from 'localforage';
-import Workflow from './Workflow';
+import Tree from './Tree';
 
 useStrict(true);
 
@@ -18,4 +18,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 const hydrate = create({ storage: localForage });
 
-export const workflow = new Workflow();
+export const tree = new Tree({
+	id: 1,
+	name: 'Root',
+	children: []
+});

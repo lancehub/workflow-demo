@@ -2,14 +2,13 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import Node from './Node';
 
-@inject('workflow')
-@observer
+@inject('tree')
 class Canvas extends React.PureComponent {
   render() {
-    const { workflow } = this.props;
+    const { tree } = this.props;
     return (
       <div className="canvas">
-        <Node tree={workflow.tree} />
+        <Node tree={tree} />
       </div>
     );
   }
